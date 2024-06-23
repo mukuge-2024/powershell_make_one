@@ -1,0 +1,108 @@
+PowerShellでgrep (Select-String) を使う
+
+https://tex2e.github.io/blog/powershell/Select-String
+
+---------------------------------------------------
+●●PowerShell入門
+---------------------------------------------------
+https://step-learn.com/article/powershell/065-if-else.html
+
+---------------------------------------------------
+■PowerShell: if文で特定の文字列を含むかどうかを条件式にする
+---------------------------------------------------
+	#  if($line.Contains($var_string)){   #文字列を含まない時だけ処理を記述する場
+	# if (($line.IndexOf($var_string) -ge 0)) { #IndexOfメソッドは検索文字列が見つかった位置を返し、 戻り値が0以上の場合は文字列が含まれる
+	# if (($line.IndexOf($var_string)  -eq -1))) { #見つからなかった場合は-1を返します。 
+    
+   
+   
+   
+---------------------------------------------------
+■PowerShell: # 文字コードを変更
+---------------------------------------------------
+#$enc = [Text.Encoding]::GetEncoding("Shift_JIS")
+$enc = [Text.Encoding]::GetEncoding("UTF-8")
+
+
+---------------------------------------------------
+PoweShellでのファイル出力方法あれこれ
+---------------------------------------------------
+(1) 「Start-TranScript」と「Stop-TranScript」
+「Start-TranScript」と「Stop-TranScript」の使用例
+Start-Transcript -Path hoge.txt
+
+Stop-Transcript
+特徴
+・スクリプト内で範囲を絞っての出力が可能
+・「Start-Transcript」と「Stop-Transcript」の2つで1セット。
+・コンソールとファイル、両方に出力される。
+・追記は不可
+
+(2) リダイレクト
+例
+ping 127.0.0.1 >> hoge.log
+メモ
+「>」　：ファイルへ出力（上書き）
+「>>」：ファイルへ出力（追記）
+「2>」：エラーメッセージのみファイルへ出力（上書き）
+　　　　実行結果はコンソールへ表示。
+「2>>」：エラーメッセージのみファイルへ出力（追記）
+　　　　　実行結果はコンソールへ表示
+「2>&1」：エラーメッセージを変数$Errorへ格納し、コンソールにも表示する。
+　　　　　実行結果はコンソールへ表示。
+　　　　　
+---------------------------------------------------
+PowerShellでのSplitによる文字列の分割
+---------------------------------------------------
+$str = "a,b,c"
+$arr = $str.split(",")
+
+
+タブで区切る
+$str = Get-Content "d:\test3\test1.txt" # a b c(タブ区切り)
+$arr = $str.split("`t")
+
+
+正規表現で区切り文字をORで指定
+正規表現で区切り文字をコロン(:)とカンマ(,)にします。
+
+$str = "1:a,2:b,3:c"
+
+$arr = $str -split "[,:]"
+
+Write-Host ("1=" + $arr[0])  # 1
+Write-Host ("2=" + $arr[1])  # a
+Write-Host ("3=" + $arr[2])  # 2
+Write-Host ("4=" + $arr[3])  # b
+Write-Host ("5=" + $arr[4])  # 3
+Write-Host ("6=" + $arr[5])  # c
+[,:]は、カンマ(,)またはコロン(:)という正規表現です。
+
+正規表現の一覧表
+
+末尾が区切り文字の時、最後は要素になる?
+$str = "a,b,c,"
+
+$arr = $str.split(",")
+
+Write-Host ($arr.Length)  # 4
+
+1行目は、末尾が区切り文字のカンマで終わっています。
+この場合、区切り文字の後は空文字の要素になります。
+　　　　　
+　　　　　
+　　　　　
+　　　　　https://learn.microsoft.com/ja-jp/powershell/scripting/learn/deep-dives/everything-about-arrays?view=powershell-7.4
+　　　　　
+値の更新
+配列が文字列または整数 (値型) のコレクションである場合、ループするときに配列内の値の更新が必要になることがあります。 上記のほとんどのループでは、値のコピーを保持する変数をループ内で使用します。 その変数を更新しても、配列内の元の値は更新されません。
+
+そのステートメントの例外は、for ループです。 配列を調べてその内部の値を更新する場合、お探しのものは for ループです。
+
+PowerShell
+
+コピー
+for ( $index = 0; $index -lt $data.count; $index++ )
+{
+    $data[$index] = "Item: [{0}]" -f $data[$index]
+}

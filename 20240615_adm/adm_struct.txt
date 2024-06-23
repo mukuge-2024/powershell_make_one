@@ -1,0 +1,85 @@
+https://learn.microsoft.com/ja-jp/openspecs/windows_protocols/ms-gpreg/e8620ae6-f3fd-4679-a23c-48a45805b8bb
+
+CLASS USER
+ CATEGORY !!LogonLogoff
+ ; Most applications will use a registry key with the naming convention 
+ ; Software\Policies\CompanyName\ProductName\ComponentName
+ ; 
+ ; For example:  Software\Policies\Microsoft\Windows\Printing
+    KEYNAME "Software\Microsoft\Windows\CurrentVersion\Policies\System"
+ ; This is a simple policy that sets DisableTaskMgr to 1 when enabled.
+    POLICY !!DisableTaskMgr    
+        EXPLAIN !!DisableTaskMgr_Explain
+        VALUENAME "DisableTaskMgr"
+    END POLICY
+  
+ ; This is a simple policy that sets the numeric values based
+ ; upon the policy state. When a policy is in the unchecked state,
+ ; the value is removed from the registry. To write a value to the
+ ; registry when the policy is unchecked, use the VALUEOFF keyword.
+  
+    POLICY !!Run_Legacy_Logon_Script_Hidden
+        EXPLAIN !!Run_Legacy_Logon_Script_Hidden_Explain
+        VALUENAME "HideLegacyLogonScripts"
+            VALUEON NUMERIC 1
+            VALUEOFF NUMERIC 0
+    END POLICY
+  
+ ; This policy demonstrates some of the different PART types.
+         
+    POLICY !!LimitSize
+       EXPLAIN !!LimitSize_Explain
+       VALUENAME "EnableProfileQuota"
+  
+       PART !!SizeMessage               EDITTEXT
+          DEFAULT !!DefaultSizeMessage
+          VALUENAME "ProfileQuotaMessage"
+       END PART
+  
+       PART !!ProfileSize               NUMERIC REQUIRED SPIN 100
+          VALUENAME "MaxProfileSize"
+          DEFAULT 30000
+          MAX    30000
+          MIN    300
+       END PART
+  
+       PART !!IncludeRegInProQuota      CHECKBOX
+          VALUENAME "IncludeRegInProQuota"
+       END PART
+  
+       PART !!WarnUser                  CHECKBOX
+          VALUENAME "WarnUser"
+       END PART
+  
+       PART !!WarnUserTimeout           NUMERIC REQUIRED SPIN 5
+          VALUENAME "WarnUserTimeout"
+          DEFAULT 15
+          MIN    0
+       END PART
+    END POLICY
+ END CATEGORY
+  
+ [Strings]
+ DefaultSizeMessage="You have exceeded your profile storage space.
+  Before you can log off, you need to move some items from your profile 
+ to network or local storage."
+ DisableTaskMgr="Disable Task Manager"
+ DisableTaskMgr_Explain="Prevents users from starting Task Manager
+  (Taskmgr.exe).\n\nIf the user tries to start Task Manager, the system 
+ displays a message indicating that the action is prohibited by a 
+ policy.\n\nTask Manager lets users start and stop programs; monitor 
+ the performance of their computer; view and monitor all programs 
+ running on the computer, including system services; find the 
+ executable name of a program; and change the priority of the process 
+ in which a program runs."
+ IncludeRegInProQuota="Include registry in file list"
+ LimitSize="Limit profile size"
+ LimitSize_Explain="Limits the size of user profiles"
+ LogOnLogOff="Logon/Logoff"
+ ProfileSize="Max Profile size (KB)"
+ Run_Legacy_Logon_Script_Hidden="Run legacy logon scripts hidden"
+ Run_Legacy_Logon_Script_Hidden_Explain="This policy allows the legacy 
+ (user-specific) logon scripts to run hidden."
+ SizeMessage="Custom Message"
+ WarnUser="Notify user when profile storage space is exceeded."
+ WarnUserTimeout="Remind user every X minutes"
