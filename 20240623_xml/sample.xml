@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <path>/tmp</path>
+  <as>
+    <a>
+      <name>1</name>
+      <al>abc</al>
+      <date>2008-01-01</date>
+    </a>
+    <a>
+      <name>2</name>
+      <al>efg</al>
+      <date>2009-01-01</date>
+    </a>
+    <a>
+      <name>3</name>
+      <al>xyz</al>
+      <date>2010-01-01</date>
+    </a>
+  </as>
+</root>
