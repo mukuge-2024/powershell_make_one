@@ -1,0 +1,23 @@
+ [Strings]
+ A_Policy="テスト項目"
+ A_Explain="テスト内容 テスト内容 テスト内容 テスト内容 テスト内容 テスト内容 テスト内容 テスト内容 テスト内容 テスト内容 テスト内容 テスト内容 テスト内容"
+ DisableTaskMgr_Policy="Disable Task Manager"
+ DisableTaskMgr_Explain="Prevents users from starting Task Manager
+  (Taskmgr.exe).\n\nIf the user tries to start Task Manager, the system 
+ displays a message indicating that the action is prohibited by a 
+ policy.\n\nTask Manager lets users start and stop programs; monitor 
+ the performance of their computer; view and monitor all programs 
+ running on the computer, including system services; find the 
+ executable name of a program; and change the priority of the process 
+ in which a program runs."
+ IncludeRegInProQuota="Include registry in file list"
+ LimitSize="Limit profile size"
+ LimitSize_Explain="Limits the size of user profiles"
+ LogOnLogOff="Logon/Logoff"
+ ProfileSize="Max Profile size (KB)"
+ Run_Legacy_Logon_Script_Hidden="Run legacy logon scripts hidden"
+ Run_Legacy_Logon_Script_Hidden_Explain="This policy allows the legacy 
+ (user-specific) logon scripts to run hidden."
+ SizeMessage="Custom Message"
+ WarnUser="Notify user when profile storage space is exceeded."
+ WarnUserTimeout="Remind user every X minutes"

@@ -1,0 +1,18 @@
+
+$PATHTOMETAFLAC = "C:\path\to"
+${PATHTOMETAFLAC}\metaflac.exe --import-picture-from="||||${l}\${MYCOVER}" "${l}\*.flac"
+
+
+
+$PATHTOMETAFLAC = "C:\path\to\metaflac.exe"
+${PATHTOMETAFLAC} --import-picture-from="||||${l}\${MYCOVER}" "${l}\*.flac"
+
+じゃあ変数に格納したコマンドってどう実行するの？　って調べたところ、Invoke-ExpressionというPowershellからスクリプトを実行するPowershellコマンドがあるとのこと。
+コマンドと引数/オプションをそれぞれ変数に入れ、それらを結合して別変数に入れ、その別変数をInvoke-Expressionで実行することで解決しました。
+
+引数/オプション前にスペースを入れることと、変数中のダブルクオーテーションをエスケープすることを忘れずに。
+
+${PATHTOMETAFLAC} = "C:\path\to\metaflac.exe"
+${MYMETAFLACARGS} = " --import-picture-from=`"||||${l}\${MYCOVER}`" `"${l}\*.flac`""
+${MYCMD} = ${PATHTOMETAFLAC} + ${MYMETAFLACARGS}
+Invoke-Expression ${MYCMD}

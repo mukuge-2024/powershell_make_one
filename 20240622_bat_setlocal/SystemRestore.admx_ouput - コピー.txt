@@ -1,0 +1,4 @@
+    <policy name="SR_DisableConfig" class="Machine" displayName="$(string.SR_DisableConfig)" explainText="$(string.SR_DisableConfig_Help)" key="Software\Policies\Microsoft\Windows NT\SystemRestore" valueName="DisableConfig">
+      <parentCategory ref="SR" />
+    <policy name="SR_DisableSR" class="Machine" displayName="$(string.SR_DisableSR)" explainText="$(string.SR_DisableSR_Help)" key="Software\Policies\Microsoft\Windows NT\SystemRestore" valueName="DisableSR">
+      <parentCategory ref="SR" />
