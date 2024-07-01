@@ -1,0 +1,66 @@
+Get-WmiObject -Class Win32_Printer -ComputerName "localhost" | select Default,Name,Portname,Status
+
+Get-Printer -ComputerName "hostname" | select Default,Name,Portname,Status
+
+Select-Stringコマンドレットの主なオプション
+　Select-Stringコマンドレットの主なオプションは次の通りです。
+
+オプション	意味
+-Path	ファイルのパスを指定する。省略可能
+-Pattern	検索するテキストを文字列または正規表現で指定する
+-NotMatch	指定したパターンに一致しないファイルを検索する
+-CaseSensitive	大文字と小文字を区別する。省略時は区別
+
+Select-String -Path [ファイル名] -Pattern [検索パターン] -Context [前の行数], [後の行数] | % { $_.Context.PreContext + $_.Line + $_.Context.PostContext }
+
+OR検索
+
+PS > Select-String "c:\test\test.log" -Pattern "A0","D"
+test.log:1:A00123456489
+test.log:4:D19321634562
+
+AND検索
+
+PS > Select-String "c:\test\test.log" -Pattern "0" | Select-String "C"
+test.log:3:C01564231320
+
+NOT検索
+
+PS > Select-String -Path "c:\test\test.log" -NotMatch -Pattern "00"
+test.log:3:C01564231320
+test.log:4:D19321634562
+
+
+
+1	単純パターン	-Patternパラメータに、検索したい文字列をそのまま指定する
+例）Select-String aaa.txt -Pattern ssworks
+2	正規表現パターン	-Patternパラメータに、検索したい正規表現パターンをそのまま指定する
+例）Select-String aaa.txt -Pattern ^ssworks
+※正規表現について知りたい方は、こちらを参照してみてください。
+※正規表現を知ると、やりたいことの幅が広がりますよ
+3	複数パターン指定	-Patternパラメータに、検索したいパターンをカンマ（,）区切りで指定する
+例）Select-String aaa.txt -Pattern ^start, end$, ssworks
+4	不一致指定	-NotMatchパラメータを指定する
+例）Select-String aaa.txt -Pattern ssworks -NotMatch
+5	大文字・小文字区別	-CaseSensitiveパラメータを指定する
+例）Select-String aaa.txt -Pattern ssworks -CaseSensitive
+
+PS C:\> Select-String .\bbb.txt -Pattern ssworks -Context 1,1
+
+  bbb.txt:2:aaaaa
+> bbb.txt:3:ssworks are
+  bbb.txt:4:
+> bbb.txt:5:aaaaaaa SSWORKS
+  bbb.txt:6:
+
+
+ファイル出力
+
+PS C:> Select-String .\bbb.txt -Pattern ssworks | Set-Content .\result.txt
+PS C:> Get-Content .\result.txt
+C:\bbb.txt:3:ssworks are
+C:\bbb.txt:5:aaaaaaa SSWORKS
+グリッド表示
+
+PS C:> Select-String .\bbb.txt -Pattern ssworks | Out-GridView
+PS C:>
